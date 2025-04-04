@@ -316,14 +316,15 @@ def build_dataloader(dataset, batch_size) -> DataLoader:
     # Multiple workers is only supported on linux machines
     if "linux" in platform.platform().lower():
         num_workers = min(64, dataset.hf_dataset.n_shards)  # type: ignore
+        # If using multiple workers, configure each worker to prefetch as many samples as it can, up to
+        # the aggregate device batch size
+        # If not using workers, the torch DataLoader expects the default value for prefetch_factor,
+        # which non-intuitively must be 2.
+        prefetch_factor = max(1, 2 * batch_size // num_workers) if num_workers > 0 else 2 # TODO check: moved from outside
     else:
         num_workers = 0
+        prefetch_factor = None # TODO check: manually added
 
-    # If using multiple workers, configure each worker to prefetch as many samples as it can, up to
-    # the aggregate device batch size
-    # If not using workers, the torch DataLoader expects the default value for prefetch_factor,
-    # which non-intuitively must be 2.
-    prefetch_factor = max(1, 2 * batch_size // num_workers) if num_workers > 0 else 2
 
     return DataLoader(
         dataset=dataset,
