@@ -3,6 +3,19 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+# My files
+.idea/
+
+# My data
+src/data/test_data
+src/data/local_dataset
+src/data/out_test_parquet
+src/data/c4_mds_test
+src/data/c4_samples_dataset
+src/data/c4_samples_dataset_with_split
+src/data/c4_samples_local_repo
+my-copy-c4/
+
 # C extensions
 *.so
 

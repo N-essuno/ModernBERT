@@ -4,4 +4,14 @@ mosaicml[nlp,wandb]>=0.22.0,<0.23
 mosaicml-streaming==0.7.6
 omegaconf==2.3.0
 transformers==4.40.2
-triton==2.3.0
+# triton==2.3.0 # excluded for cpu-only
+
+# From data
+numpy
+datasets
+datatrove==0.2.0
+huggingface_hub==0.23.1
+pyyaml
+ruff
+tqdm
+mosaicml-streaming
